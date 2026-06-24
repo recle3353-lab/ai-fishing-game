@@ -121,6 +121,7 @@ EVENTS = json.loads(r"""{"drift_bottle":{"id":"drift_bottle","name":"漂流瓶",
 ITEMS = json.loads(r"""{"coral_pearl":{"id":"coral_pearl","name":"珊瑚珍珠","type":"treasure","description":"粉红色的珍珠，带着珊瑚的温润光泽，仿佛刚从人鱼的王冠上摘下。","value":150,"sellable":true},"gem_sapphire":{"id":"gem_sapphire","name":"蓝宝石","type":"treasure","description":"深海般的蓝色，里面封存着浪涛的纹路，轻晃时仿佛有潮声。","value":300,"sellable":true},"moonstone":{"id":"moonstone","name":"月光石","type":"treasure","description":"乳白色的石头上流转着月华般的光晕，传说月光凝结而成。","value":450,"sellable":true},"ambergris":{"id":"ambergris","name":"龙涎香","type":"treasure","description":"传说中的鲸之宝，散发着奇异幽香，正是香料商人梦寐以求的至宝。","value":500,"sellable":true},"shipwreck_coin":{"id":"shipwreck_coin","name":"沉船金币","type":"treasure","description":"一枚古老的金币，正面刻着模糊的王冠，背面是早已沉没的船名。","value":200,"sellable":true},"ancient_key":{"id":"ancient_key","name":"古老的钥匙","type":"key","description":"一把沉重的黄铜钥匙，尾端雕着海怪缠锚的图案，握在手里仿佛能听见远航的号角。","value":0,"sellable":false}}""")
 
 _SAVE = os.path.join(os.path.dirname(os.path.abspath(__file__)) if "__file__" in globals() else ".", "fishing_save.json")
+_IO_WARN = ""   # 存档读/写出问题时的一次性提示；cmd() 会把它贴在输出末尾，不再静默吞掉
 
 def _new_state(seed=_DEFAULT_SEED):
     seed = int(seed) & 0xFFFFFFFF
@@ -132,24 +133,33 @@ def _new_state(seed=_DEFAULT_SEED):
 
 S = None
 def _load():
-    global S
+    global S, _IO_WARN
     if S is not None:
         return S
-    try:
-        with open(_SAVE, "r", encoding="utf-8") as f:
-            S = json.load(f)
-    except Exception:
-        S = _new_state()
+    if os.path.exists(_SAVE):
+        try:
+            with open(_SAVE, "r", encoding="utf-8") as f:
+                S = json.load(f)
+        except Exception as e:
+            # 存档存在却读不出/损坏：别静默丢档——备份一份再开新局，并提示玩家
+            try: os.replace(_SAVE, _SAVE + ".corrupt")
+            except Exception: pass
+            S = _new_state()
+            _IO_WARN = "⚠️ 存档读取失败（%s）：已把坏档备份为 %s，并开了一局新的。" % (e, os.path.basename(_SAVE) + ".corrupt")
+    else:
+        S = _new_state()   # 首次运行，找不到存档是正常的，不提示
     S.setdefault("items", {}); S.setdefault("pending_chests", []); S.setdefault("seen_letters", {}); S.setdefault("local_dry", 0)
     S.setdefault("stats", {}).setdefault("total_chests", 0)
     S["stats"].setdefault("total_casts", 0); S["stats"].setdefault("total_caught", 0)
     return S
 def _save():
+    global _IO_WARN
     try:
         with open(_SAVE, "w", encoding="utf-8") as f:
             json.dump(S, f, ensure_ascii=False)
-    except Exception:
-        pass
+    except Exception as e:
+        # 写不进去（目录只读/没权限/磁盘满）：别让玩家以为存上了
+        _IO_WARN = "⚠️ 存档写入失败（%s）：本局进度可能不会被保存，检查一下目录权限/磁盘空间。" % e
 
 def _eligible(f, loc_id, sea_id):
     lo = "all" in f["locations"] or loc_id in f["locations"]
@@ -511,33 +521,48 @@ _HELP = """文字钓鱼游戏（你是玩家）。用点数买鱼饵→抛竿→
 抛竿偶尔会遇到漂流瓶/宝箱/宝物等惊喜事件。
 目标：用有限点数把图鉴里的鱼尽量集满（有的鱼只在特定地点+季节出现）。一开始你并不知道有哪些鱼——靠抛竿去发现。"""
 
+def _drain_warn(out):
+    """把待提示的存档读写问题贴到输出末尾，并清空（一次性）。保证任何返回都带上 IO 提示。"""
+    global _IO_WARN
+    if _IO_WARN:
+        out = out + "\n" + _IO_WARN
+        _IO_WARN = ""
+    return out
+
 def cmd(line=""):
-    """游戏的唯一入口：传一条文字指令，返回结果文字。GPT 当玩家就反复调它。"""
+    """游戏的唯一入口：传一条文字指令，返回结果文字。任何输入都只返回字符串、不抛异常。"""
     _load()
     line = (line or "").strip()
     if not line:
-        return _HELP
+        return _drain_warn(_HELP)
     parts = line.split()
     c = parts[0].lower(); a = parts[1:]
-    if c in ("help", "h"): return _HELP
-    elif c in ("status", "s"): out = _c_status()
-    elif c == "shop": out = _c_shop()
-    elif c == "buy": out = _c_buy(a[0] if a else "", int(a[1]) if len(a) > 1 else 1)
-    elif c in ("cast", "c"):
-        cb = next((t for t in a if t in BAITS), None)
-        ct = next((int(t) for t in a if t.isdigit()), 1)
-        cs = next((t[5:].split(",") for t in a if t.startswith("stop=")), None)
-        out = _cast_many(cb, ct, cs)
-    elif c == "open": out = _c_open(a[0] if a else "")
-    elif c in ("goto", "go"): out = _c_goto(a[0] if a else "")
-    elif c in ("inventory", "inv", "i"): out = _c_inv()
-    elif c == "sell": out = _c_sell(" ".join(a))
-    elif c in ("encyclopedia", "enc", "e"): out = _c_enc()
-    elif c in ("look", "l"): out = _c_look(a[0] if a else "")
-    else: return "未知指令「%s」。调 cmd('help') 看词表。" % c
+    try:
+        if c in ("help", "h"): out = _HELP
+        elif c in ("status", "s"): out = _c_status()
+        elif c == "shop": out = _c_shop()
+        elif c == "buy":
+            if len(a) > 1 and not a[1].lstrip("+").isdigit():
+                return _drain_warn("数量得是个数字，例：buy basic_worm 2。")
+            out = _c_buy(a[0] if a else "", int(a[1]) if len(a) > 1 else 1)
+        elif c in ("cast", "c"):
+            cb = next((t for t in a if t in BAITS), None)
+            ct = next((int(t) for t in a if t.isdigit()), 1)
+            cs = next((t[5:].split(",") for t in a if t.startswith("stop=")), None)
+            out = _cast_many(cb, ct, cs)
+        elif c == "open": out = _c_open(a[0] if a else "")
+        elif c in ("goto", "go"): out = _c_goto(a[0] if a else "")
+        elif c in ("inventory", "inv", "i"): out = _c_inv()
+        elif c == "sell": out = _c_sell(" ".join(a))
+        elif c in ("encyclopedia", "enc", "e"): out = _c_enc()
+        elif c in ("look", "l"): out = _c_look(a[0] if a else "")
+        else: return _drain_warn("未知指令「%s」。调 cmd('help') 看词表。" % c)
+    except Exception as e:
+        # 公开 API 兜底：任何意外（含格式错）都返回友好文字，绝不向调用方抛栈
+        return _drain_warn("这条指令没读懂（%s）。看 cmd('help')，例：buy basic_worm 2 / cast 10 stop=rare。" % e)
     _save()
     out = re.sub(r"\n?\[\[photo:[^\]\n]+\]\]", "", out)
-    return out
+    return _drain_warn(out)
 
 def new_game(seed=_DEFAULT_SEED):
     """重开一局（可指定种子，同种子+同指令完全可复现）。"""
