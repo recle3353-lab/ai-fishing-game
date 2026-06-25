@@ -1639,8 +1639,8 @@ def _format_catch(f, size, value, inst, first):
         nm = "（★首次收录 +%d点）" % RARITY[r]["discovery_bonus"] if first else ""
         body = "%s · %s%s · %d点%s\n%s%s" % (f["name"], size, u, value, nm, flavor, ("\n📜 " + f["rumor"]) if f.get("rumor") else "")
         return "%s\n%s\n%s" % (top, body, top) if r == "mythic" else "%s\n%s" % (top, body)
-    if first:   # 🆕 新发现：图鉴描述 + 🫧手感 都留，只去掉重复的「图鉴新发现」标签（🆕 + 首次收录 各一次）
-        return "🆕 %s · %s · %s%s · %d点\n%s\n首次收录 +%d点" % (f["name"], rl, size, u, value, flavor, RARITY[r]["discovery_bonus"])
+    if first:   # 🎉 图鉴新发现仪式行在最上一行，下面 🆕 紧凑头 + 图鉴描述 + 🫧手感（都保留）
+        return "🎉 图鉴新发现！首次收录奖励 +%d 点\n🆕 %s · %s · %s%s · %d点\n%s" % (RARITY[r]["discovery_bonus"], f["name"], rl, size, u, value, flavor)
     if r in ("rare", "epic"):
         return "%s %s · %s%s · %d点\n%s" % ("✦✦ 史诗" if r == "epic" else "✦ 稀有", f["name"], size, u, value, flavor)
     return "· %s%s %s%s +%d" % (f["name"], "（少见）" if r == "uncommon" else "", size, u, value)
