@@ -1701,6 +1701,7 @@ def _gain_fragment(loc_id):
 
 # ── 幸运随机事件：成功钓到鱼后小概率触发，立即生效或给后续几竿挂 buff ──
 LUCK_CHANCE = 0.05          # 每条成功渔获后触发幸运事件的概率
+FULL_DEX_RUIN_BOOST = 3     # 全图鉴后大遗迹(branch)权重×倍：没新鱼可发现了，残局转向探遗迹
 _FEVER_CASTS = 3            # 渔获热潮持续竿数
 _FREE_BAIT_CASTS = 3       # 河神祝福免饵竿数
 _LUCK_EVENTS = [
@@ -1721,7 +1722,11 @@ def _resolve_dive_encounter(rng, enc):
 def _roll_luck(rng, pool, bait_id, f, size, inst, mode="cast"):
     if rng.random() >= LUCK_CHANCE: return "", None
     # 潜水只出水下奇遇/大遗迹，不复用水面幸运事件（分裂鱼钩/河神祝福等在水下出戏、还会凭空生成鱼饵）
-    events = [{"id": e["id"], "weight": e["weight"]} for e in DIVE_ENCOUNTERS] if mode == "dive" else _LUCK_EVENTS
+    if mode == "dive":
+        _full = len(S["encyclopedia"]) >= len(FISH)   # 全图鉴后，大遗迹更常出（残局玩法）
+        events = [{"id": e["id"], "weight": e["weight"] * (FULL_DEX_RUIN_BOOST if (_full and e.get("branch")) else 1)} for e in DIVE_ENCOUNTERS]
+    else:
+        events = _LUCK_EVENTS
     eid = _pick_by_weight(rng, events)["id"]
     if eid == "split_hook":   # 鱼钩一分为三：再钓上两条
         weights = [_eff_weight(g, S["location_id"], S["season_id"], bait_id) for g in pool]
