@@ -853,41 +853,105 @@ DIVE_ENCOUNTERS = json.loads(r"""
   "emoji": "🧰",
   "id": "deep_vault",
   "name": "海底宝库",
-  "weight": 6,
-  "text": "海床裂缝里嵌着一只覆满贝壳与珊瑚的青铜箱，锁早已锈死，缝里却渗出珠光。",
-  "reward": {
-   "chest": "seafloor_vault"
-  }
+  "weight": 5,
+  "branch": true,
+  "intro": "一座被海藻和珊瑚半掩的石砌库房，厚重的石门裂开一道只容一人侧身挤入的缝隙，里面隐约透出金币堆叠的反光——以及某种更暗沉、更古老的金色。",
+  "options": [
+   {
+    "label": "扛起最深处的沉重金匣",
+    "oxygen": 2,
+    "outcome": {
+     "text": "你咬紧牙关将那只布满海锈的金匣扛上肩膀，每游一米都像在和整个海洋拔河。但你绝不放手——这重量值得任何代价。",
+     "reward": {
+      "items": [
+       {
+        "id": "vault_golden_chest",
+        "qty": 1
+       }
+      ]
+     }
+    }
+   },
+   {
+    "label": "就地撬开看一眼",
+    "oxygen": 1,
+    "outcome": {
+     "text": "你撬开宝库角落一只松动的石匣，宝石和古币涌出来，在你面前漂成一片短暂的星空。你抓了一把，转身离开。",
+     "reward": {
+      "points_range": [
+       80,
+       200
+      ],
+      "item_pool": [
+       {
+        "id": "coral_pearl",
+        "weight": 2
+       },
+       {
+        "id": "gem_sapphire",
+        "weight": 1
+       }
+      ]
+     }
+    }
+   },
+   {
+    "label": "留一口气，继续向前探索",
+    "oxygen": 0,
+    "outcome": {
+     "text": "你记下宝库的位置，把贪婪按回心底，转身游向未知的黑暗。石门在身后发出沉闷的叹息，像是遗憾，又像是赞许。",
+     "reward": {}
+    }
+   }
+  ]
  },
  {
+  "emoji": "🚢",
   "id": "shipwreck_graveyard",
   "name": "沉船墓场",
-  "weight": 10,
-  "text": "一片倾斜的桅杆森林在半明半暗中浮现，锈蚀的船壳层叠如巨鱼的鳞片。你穿梭在破碎的舱室间，从积沙里拾起几件被遗忘的碎梦。",
-  "reward": {
-   "points_range": [
-    40,
-    120
-   ],
-   "item_pool": [
-    {
-     "id": "lighthouse_lens_shard",
-     "weight": 4
-    },
-    {
-     "id": "salt_crystal_rose",
-     "weight": 3
-    },
-    {
-     "id": "shipwreck_coin",
-     "weight": 5
-    },
-    {
-     "id": "coral_crown",
-     "weight": 2
+  "weight": 5,
+  "branch": true,
+  "intro": "数十艘古船的残骸层叠成一座水中墓园，断裂的桅杆如墓碑般指向海面。就在你靠近时，一条银鳞闪烁的鱼群从舷窗涌出，又消失在另一艘沉船的黑洞洞的舱门里。",
+  "options": [
+   {
+    "label": "钻进最大的沉船船长室掘宝",
+    "oxygen": 2,
+    "outcome": {
+     "text": "你在坍塌的船长室中撬开一张腐朽的书桌，泛着微光的青铜星盘下，压着一只封存完好的宝箱。",
+     "reward": {
+      "items": [
+       {
+        "id": "star_astrolabe",
+        "qty": 1
+       }
+      ],
+      "chest": "seafloor_vault"
+     }
     }
-   ]
-  }
+   },
+   {
+    "label": "追逐那道银鳞鱼群",
+    "oxygen": 1,
+    "outcome": {
+     "text": "你跟着闪烁的鱼群穿过沉船的走廊，它们最终聚成一座旋转的银色风暴。你双手一拢，捧起一把会流动的月光。",
+     "reward": {
+      "fish": "silverflash_fish",
+      "points_range": [
+       30,
+       80
+      ]
+     }
+    }
+   },
+   {
+    "label": "不打扰沉眠，悄然撤离",
+    "oxygen": 0,
+    "outcome": {
+     "text": "一艘老船的船钟突然自行敲响了一声，沉闷而悠远。你对着整座墓场微微欠身，安静地退开。",
+     "reward": {}
+    }
+   }
+  ]
  },
  {
   "id": "giant_clam",
@@ -973,48 +1037,100 @@ DIVE_ENCOUNTERS = json.loads(r"""
   }
  },
  {
+  "emoji": "⛩️",
   "id": "sacrificial_altar",
   "name": "献祭石坛",
-  "weight": 6,
-  "text": "一圈坍塌的石柱拱卫着中央黑坛，坛面上暗红的纹路遇水竟微微渗血。你触到一枚温润的白玉璧，掌心旋即漫开咸涩的湿意——是古老祭品的泪。",
-  "reward": {
-   "item_pool": [
-    {
-     "id": "altar_blood_jade",
-     "weight": 4
-    },
-    {
-     "id": "ancient_relic",
-     "weight": 3
-    },
-    {
-     "id": "mermaid_tear",
-     "weight": 2
+  "weight": 5,
+  "branch": true,
+  "intro": "六根布满古咒的石柱围成一座祭坛，中央的石台上还残留着不知名的鳞片与锈色。水流在这里忽然变暖，像有什么古老的意志正贴着你后颈打量。",
+  "options": [
+   {
+    "label": "献上一条渔获，以血为契",
+    "oxygen": 1,
+    "outcome": {
+     "text": "你把鱼放在石台上，海水瞬间沸腾，那条鱼化为光点被吸入石心。一道金色的灵体从坛中游出，穿过你的胸膛——你没有受伤，却感觉自己被记住了。",
+     "reward": {
+      "fish": "altar_spirit_bream"
+     }
     }
-   ]
-  }
+   },
+   {
+    "label": "供上珍贵的宝石祈愿",
+    "oxygen": 1,
+    "outcome": {
+     "text": "你取出一枚碧蓝的宝石放上祭坛，石柱上的咒文次第亮起。一只冰冷的手仿佛拍了拍你的肩膀，再低头时，掌心多了一块温热的血玉。",
+     "reward": {
+      "items": [
+       {
+        "id": "altar_blood_jade",
+        "qty": 1
+       }
+      ]
+     }
+    }
+   },
+   {
+    "label": "绕开祭坛，绝不触碰",
+    "oxygen": 0,
+    "outcome": {
+     "text": "你屏住呼吸从石柱外围绕过，一条影子在你身后石台上缓缓凝聚成形，又在你彻底远离前无声散去。",
+     "reward": {}
+    }
+   }
+  ]
  },
  {
+  "emoji": "🕳️",
   "id": "abyss_crevice",
   "name": "深渊裂隙",
   "weight": 5,
-  "text": "海床被撕开一道狭长的伤口，幽蓝冷光如大地的呼吸般明灭。你冒险下探，在裂缝壁上撬下一颗黑珍珠，珠中星尘流转，深不见底。",
-  "reward": {
-   "points_range": [
-    50,
-    100
-   ],
-   "item_pool": [
-    {
-     "id": "abyss_black_pearl",
-     "weight": 5
-    },
-    {
-     "id": "moonstone",
-     "weight": 2
+  "branch": true,
+  "intro": "海床被撕开一道泛着幽蓝荧光的伤口，冷流从裂缝中涌出，贴着你面罩呼啸而过。你悬在裂口上方，耳膜被水压一下下攥紧——深渊深处，有什么正用和你的心跳完全同步的节奏，缓缓搏动。",
+  "options": [
+   {
+    "label": "向裂缝最深处下潜",
+    "oxygen": 2,
+    "outcome": {
+     "text": "你挤进狭窄的岩缝，黑暗浓稠得几乎要灌进肺里。指尖摸到一块冰凉的石头，黑暗本身被封印其中——你带走了深渊最深的秘密。",
+     "reward": {
+      "items": [
+       {
+        "id": "abyss_night_stone",
+        "qty": 1
+       }
+      ],
+      "fish": "crevice_blind_eel"
+     }
     }
-   ]
-  }
+   },
+   {
+    "label": "只在裂口边缘采几枚黑珠",
+    "oxygen": 1,
+    "outcome": {
+     "text": "你不敢深入，快速撬下几枚泛着幽蓝光泽的黑珍珠，在裂缝传出第一声低吟前迅速退开。",
+     "reward": {
+      "item_pool": [
+       {
+        "id": "abyss_black_pearl",
+        "weight": 3
+       },
+       {
+        "id": "gem_sapphire",
+        "weight": 1
+       }
+      ]
+     }
+    }
+   },
+   {
+    "label": "放弃探索，原路返航",
+    "oxygen": 0,
+    "outcome": {
+     "text": "裂缝深处传来一声悠长的、不属于任何已知生物的叹息。你握紧拳头，转身向上浮去，把那股战栗甩在身后。",
+     "reward": {}
+    }
+   }
+  ]
  },
  {
   "id": "ancient_chart_room",
@@ -1044,23 +1160,69 @@ DIVE_ENCOUNTERS = json.loads(r"""
   }
  },
  {
+  "emoji": "🐉",
   "id": "dragon_king_palace",
   "name": "龙王宫阙",
-  "weight": 3,
-  "text": "金琉璃瓦与血珊瑚梁在深渊边缘隐隐生光，两扇殿门为你无声敞开。殿内空无一人，唯独一枚逆鳞浮在海水中央，触及皮肤时带着古老的体温。",
-  "reward": {
-   "items": [
-    {
-     "id": "dragon_king_scale",
-     "qty": 1
+  "weight": 5,
+  "branch": true,
+  "intro": "珊瑚与水晶堆叠的宫阙在深海尽头浮现，巨大的金色瞳孔正从大殿深处俯视着你。龙威如山，海水本身都在这一眼之下停止了流动。",
+  "options": [
+   {
+    "label": "趁龙王阖眼，拔取一片龙鳞",
+    "oxygen": 3,
+    "outcome": {
+     "text": "你压住心跳游向龙尾，双手攥住一片鳞猛然发力。龙吟炸响，整座宫殿都在颤抖，你被狂暴的暗流甩出殿外——但手中死死攥着那片金光。",
+     "reward": {
+      "items": [
+       {
+        "id": "dragon_king_scale",
+        "qty": 1
+       }
+      ],
+      "fish": "scale_guardian"
+     }
     }
-   ],
-   "oxygen": 3
-  }
+   },
+   {
+    "label": "恭敬俯首，受龙王一赐",
+    "oxygen": 1,
+    "outcome": {
+     "text": "你在大殿中央单膝跪下，龙瞳微眯，一颗带着虹彩的珍珠缓缓漂到你面前。龙王什么也没说，但你清楚：这一礼值千钧。",
+     "reward": {
+      "items": [
+       {
+        "id": "dragon_eye_pearl",
+        "qty": 1
+       }
+      ],
+      "points_range": [
+       100,
+       250
+      ]
+     }
+    }
+   },
+   {
+    "label": "叩首三次，全身而退",
+    "oxygen": 0,
+    "outcome": {
+     "text": "你恭恭敬敬叩首三次，殿内的威压竟如潮水般退去。一条温暖的海流轻轻推着你原路返回，像龙尾慈祥地扫过你的背脊。",
+     "reward": {
+      "points_range": [
+       30,
+       80
+      ]
+     }
+    }
+   }
+  ]
  }
 ]
 """)
+ITEMS.update(json.loads(r"""{"abyss_night_stone": {"id": "abyss_night_stone", "name": "永夜石", "type": "treasure", "description": "从深渊裂隙最深处撬下的黑石，内部封存着一团从未见过光的纯粹黑暗，凝视过久会听见自己的心跳越来越慢。", "value": 650, "sellable": true}, "star_astrolabe": {"id": "star_astrolabe", "name": "船长的星盘", "type": "treasure", "description": "沉船船长手中紧握的青铜星盘，即使深埋海底仍在微微发烫，指针固执地指向一个早已沉没的故乡。", "value": 500, "sellable": true}, "vault_golden_chest": {"id": "vault_golden_chest", "name": "深海秘金匣", "type": "treasure", "description": "从海底宝库扛出的沉重金匣，锁孔被珊瑚封死，摇晃时能听见里面金币与某种更古老的硬物碰撞的回响。", "value": 800, "sellable": true}, "dragon_eye_pearl": {"id": "dragon_eye_pearl", "name": "龙瞳珍珠", "type": "treasure", "description": "龙王宝座上脱落的明珠，表面流转着虹彩，凝视它时瞳孔深处会有一道金色竖瞳一掠而过。", "value": 950, "sellable": true}}"""))
+FISH.update(json.loads(r"""{"crevice_blind_eel": {"id": "crevice_blind_eel", "name": "裂渊盲鳗", "rarity": "epic", "description": "深渊裂隙独有的无眼掠食者，皮肤半透明，能看见体内幽蓝的消化液如星云般缓缓旋转。", "size_min": 45, "size_max": 80, "size_unit": "cm", "base_value": 260, "tags": ["underwater", "deepsea", "shadow"], "dive": true, "latin": "Abyssoanguis anophthalmus", "capture_feel": "它缠上手腕的瞬间像一条冰冷的丝绸，但你能感到它的饥饿正顺着血管往上攀爬，痒得钻心。", "branch_only": true, "locations": ["all"], "seasons": ["all"]}, "silverflash_fish": {"id": "silverflash_fish", "name": "银鳞闪鱼", "rarity": "rare", "description": "成群结队穿过沉船缝隙的小型鱼，鳞片反射的光芒能把整座腐朽的船舱照亮如白昼。", "size_min": 15, "size_max": 25, "size_unit": "cm", "base_value": 120, "tags": ["underwater", "shoal", "shipwreck"], "dive": true, "latin": "Argentimicris naufragus", "capture_feel": "双手捧起时整群鱼在掌间炸开一片碎银般的闪光，像抓住了一把会流动的月光。", "branch_only": true, "locations": ["all"], "seasons": ["all"]}, "altar_spirit_bream": {"id": "altar_spirit_bream", "name": "坛灵鲷", "rarity": "legendary", "description": "只在接受献祭后从石坛中游出的灵体鱼，半透明的身体内漂浮着金色古咒文，游动时身后拖拽一缕不绝的梵音。", "size_min": 30, "size_max": 45, "size_unit": "cm", "base_value": 400, "tags": ["underwater", "spirit", "altar"], "dive": true, "latin": "Sacrificium aurora", "capture_feel": "指尖触到的不是鳞片，而是一阵温暖的呢喃，那条鱼穿过你的手掌，却在你心口留下一枚看不见的印记。", "branch_only": true, "locations": ["all"], "seasons": ["all"]}, "scale_guardian": {"id": "scale_guardian", "name": "鳞甲守卫", "rarity": "legendary", "description": "长期浸泡在龙王气息中的变异鱼，浑身覆盖着龙鳞般的硬甲，游动时鳍刃破开水流，如一道移动的刀阵。", "size_min": 70, "size_max": 120, "size_unit": "cm", "base_value": 500, "tags": ["underwater", "dragon", "armored"], "dive": true, "latin": "Squamatocustos draconis", "capture_feel": "双手抱住它的瞬间，鳞甲倒竖，掌心被数十片微小的利刃同时割开，疼得你几乎松手——但它终于不再挣扎。", "branch_only": true, "locations": ["all"], "seasons": ["all"]}}"""))
 _DIVE_ENC_BY_ID = {e["id"]: e for e in DIVE_ENCOUNTERS}
+_DIVE_BRANCH_IDS = {e["id"] for e in DIVE_ENCOUNTERS if e.get("branch")}   # 大遗迹：触发即暂停做抉择
 
 
 _SAVE = os.path.join(os.path.dirname(os.path.abspath(__file__)) if "__file__" in globals() else ".", "fishing_save.json")
@@ -1184,6 +1346,11 @@ def _grant_rewards(rng, rw):
     if rw.get("item_pool"):   # 从池中按权重随机得 1 件
         iid = _pick_by_weight(rng, rw["item_pool"])["id"]
         S["items"][iid] = S["items"].get(iid, 0) + 1; parts.append("%s×1" % ITEMS.get(iid, {}).get("name", iid))
+    if rw.get("fish"):   # 直接获得一条该鱼种（含图鉴；遗迹专属鱼平时钓不到）
+        gf = FISH.get(rw["fish"])
+        if gf:
+            gs = _roll_size(rng, gf); gv = _value(gf, gs); _gi, gfirst, _gb = _record_catch(gf, gs, gv)
+            parts.append("%s%s %s%s" % (gf["name"], "★新发现" if gfirst else "", gs, gf["size_unit"]))
     if rw.get("oxygen"):
         S["oxygen"] = S.get("oxygen", 0) + rw["oxygen"]; S["oxygen_ever"] = True; parts.append("氧气瓶×%d" % rw["oxygen"])
     if rw.get("chest"):   # 得到一只待开宝箱（event_id 在 EVENTS 或 DIVE_EVENTS）
@@ -1290,7 +1457,7 @@ def _undiscovered_here(loc_id, sea_id):
     return normal, legend
 # 某地点当季「水下」还有几种没见过的鱼（只数 dive 鱼）；买过氧气瓶才对玩家显示
 def _undiscovered_dive(loc_id, sea_id):
-    return sum(1 for f in FISH.values() if f.get("dive") and _eligible(f, loc_id, sea_id) and f["id"] not in S["encyclopedia"])
+    return sum(1 for f in FISH.values() if f.get("dive") and not f.get("branch_only") and _eligible(f, loc_id, sea_id) and f["id"] not in S["encyclopedia"])
 
 def _c_status():
     baits = "、".join("%s×%d" % (BAITS[b]["name"], n) for b, n in S["bait_inventory"].items() if n > 0) or "（没饵了，去 shop 买）"
@@ -1574,7 +1741,9 @@ def _roll_luck(rng, pool, bait_id, f, size, inst, mode="cast"):
         S["items"][tk] = S["items"].get(tk, 0) + 1
         return "🦪✨ 蚌中生珠！鱼肚里滚出一枚%s（可 sell item %s）。" % (ITEMS[tk]["name"], tk), eid
     enc = _DIVE_ENC_BY_ID.get(eid)   # 水下奇遇（数据驱动）
-    if enc: return _resolve_dive_encounter(rng, enc), eid
+    if enc:
+        if enc.get("branch"): return "", eid   # 大遗迹：不在此结算，交给远征循环暂停做抉择
+        return _resolve_dive_encounter(rng, enc), eid
     return "", None
 
 _DIVE_JUNK = ["一截缠满水草的烂绳", "半扇生满藤壶的空贝壳", "一块硌手的礁石", "一只空了的海螺", "一团黏糊糊的水绵"]
@@ -1615,7 +1784,7 @@ def _cast_step(rng, bait_id, mode="cast"):
         if dive:
             return {"text": season_msg + "🪨 %s。空潜一次，什么也没摸到。%s" % (_DIVE_JUNK[rng.rint(0, len(_DIVE_JUNK) - 1)], _ambience(loc, rng)), "consumed": True, "kind": "junk", "season_changed": season_changed}
         return {"text": season_msg + "🪣 %s。空军一竿。%s%s" % (_JUNK[rng.rint(0, len(_JUNK) - 1)], _ambience(loc, rng), _secret_hint()), "consumed": True, "kind": "junk", "season_changed": season_changed}
-    pool = [f for f in FISH.values() if _eligible(f, S["location_id"], S["season_id"]) and bool(f.get("dive")) == dive]
+    pool = [f for f in FISH.values() if _eligible(f, S["location_id"], S["season_id"]) and bool(f.get("dive")) == dive and not (dive and f.get("branch_only"))]
     if not pool:
         if not dive: S["local_dry"] = S.get("local_dry", 0) + 1
         if dive:
@@ -1652,30 +1821,20 @@ def _c_cast(bait_id):
 _RARITY_RANK = {"common": 0, "uncommon": 1, "rare": 2, "epic": 3, "legendary": 4, "mythic": 5}
 _SOLO_HINT = "\n💡 一次只钓 1 竿挺费 token——下次试 cast 10 连钓，只回 1 条汇总（配 stop=new/rare 还能钓到新种/稀有就自动停）。"
 _DIVE_SOLO_HINT = "\n💡 多带几瓶氧气可以连潜：dive 5（配 stop=new 钓到新种就停），省来回。"
-def _cast_many(bait_id, times, stop_on, mode="cast"):
-    dive = mode == "dive"
+def _cast_many(bait_id, times, stop_on):   # 仅水面抛竿（潜水走 _dive_start 远征系统）
     times = max(1, min(20, int(times)))
-    if dive and not _dive_unlocked(S["location_id"]):   # 潜水点未解锁：先去集藏宝图碎片
-        loc = LOCATIONS[S["location_id"]]; need = _dive_frags_needed(loc); have = S.get("map_fragments", {}).get(S["location_id"], 0)
-        return "🔒 【%s】的潜水点还没解锁——先在水面钓鱼集齐藏宝图碎片（已 %d/%d），拼出地图再来潜。" % (loc["name"], have, need)
     rng = _Rng(S["rngState"], S["rngCalls"])
-    scene = ""   # 潜水：结果顶部出一句当地当季「下潜实况」（真有氧气下水才出；水面不出、不耗 rng）
-    if dive and S.get("oxygen", 0) > 0:
-        opts = LOCATIONS[S["location_id"]].get("dive_ambience", {}).get(S["season_id"], [])
-        if opts: scene = "🤿 " + opts[rng.rint(0, len(opts) - 1)] + "\n\n"
-    if times == 1 and not stop_on:   # 单次：成功就提醒可以连钓/连潜省 token
-        r = _cast_step(rng, bait_id, mode)
+    if times == 1 and not stop_on:
+        r = _cast_step(rng, bait_id)
         S["rngState"] = rng.state; S["rngCalls"] = rng.calls
-        if not r["consumed"]: return r["text"]
-        return scene + r["text"] + (_DIVE_SOLO_HINT if dive else _SOLO_HINT)
+        return r["text"] + _SOLO_HINT if r["consumed"] else r["text"]
     stop = set(stop_on or [])
     highlights = []; caught = {}; caught_n = 0; new_n = 0; junk_n = 0; empty_n = 0; done = 0
-    pts0 = S["points"]; inv0 = len(S["catch_inventory"]); items0 = dict(S.get("items", {}))   # 远征结算用：快照
-    stop_reason = ("潜满 %d 次" % times) if dive else ("钓满 %d 竿" % times)
+    stop_reason = "钓满 %d 竿" % times
     for _ in range(times):
-        r = _cast_step(rng, bait_id, mode)
+        r = _cast_step(rng, bait_id)
         if not r["consumed"]:
-            highlights.append(r["text"]); stop_reason = "没气瓶了" if dive else "没饵了"; break
+            highlights.append(r["text"]); stop_reason = "没饵了"; break
         done += 1
         rank = _RARITY_RANK.get(r.get("rarity", ""), 0)
         if r.get("first") or rank >= 2 or r["kind"] == "event" or r["season_changed"] or r.get("luck") or r.get("fever_hit") or r.get("frag"):
@@ -1685,31 +1844,99 @@ def _cast_many(bait_id, times, stop_on, mode="cast"):
             if r["first"]: new_n += 1
         elif r["kind"] == "junk": junk_n += 1
         elif r["kind"] == "empty": empty_n += 1
-        new_hit = "new" in stop and r.get("first")
-        rare_hit = "rare" in stop and rank >= 2
-        enc_hit = r.get("luck") in _DIVE_ENC_BY_ID                       # 水下奇遇（珊瑚宫/遗迹/海底宝库…）
-        event_hit = "event" in stop and (r["kind"] == "event" or enc_hit)   # 漂流瓶/宝箱/宝物 + 水下奇遇都算
-        if new_hit or rare_hit or event_hit:
-            stop_reason = "钓到新种" if new_hit else ("钓到稀有+" if rare_hit else ("遇到水下奇遇" if enc_hit else "遇到事件"))
-            break
+        new_hit = "new" in stop and r.get("first"); rare_hit = "rare" in stop and rank >= 2
+        if new_hit or rare_hit or ("event" in stop and r["kind"] == "event"):
+            stop_reason = "钓到新种" if new_hit else ("钓到稀有+" if rare_hit else "遇到事件"); break
     S["rngState"] = rng.state; S["rngCalls"] = rng.calls
     body = ("\n———\n".join(highlights) + "\n\n") if highlights else ""
     haul = "、".join("%s×%d" % (n, c) for n, c in caught.items())
-    if dive:   # 一次潜水＝一趟远征，上岸汇总：渔获价值 / 宝物事件收益 / 新图鉴 / 氧气花费 / 净值
-        catch_value = sum(c["value"] for c in S["catch_inventory"][inv0:])
-        treasure_value = sum(ITEMS.get(k, {}).get("value", 0) * (S["items"].get(k, 0) - items0.get(k, 0)) for k in S.get("items", {}))
-        extra_in = treasure_value + (S["points"] - pts0)   # 宝物 + 事件点数 + 新图鉴首发奖励
-        cost = done * OXYGEN["cost"]; net = catch_value + extra_in - cost
-        s = "—— 🤿 远征结算 ——"
-        s += "\n🐟 渔获 %d 条%s：%s（可卖约 %d 点）" % (caught_n, ("，新种 %d" % new_n) if new_n else "", haul or "空潜", catch_value)
-        if extra_in: s += "\n🎁 宝物/事件/新发现：+%d 点" % extra_in
-        if junk_n + empty_n: s += "\n🪨 空手 %d 次" % (junk_n + empty_n)
-        s += "\n⛽ 氧气花费：%d 瓶（约 -%d 点）\n💰 本趟净值：约 %+d 点（卖掉渔获/宝物后）" % (done, cost, net)
-        return scene + "🤿 远征归来 · 潜 %d 次 · 停因：%s\n%s%s" % (done, stop_reason, body, s)
     tail = "🐟 上钩 %d 条%s：%s" % (caught_n, ("（新种 %d）" % new_n) if new_n else "", haul or "空军")
     if junk_n: tail += "　🪣 杂物 %d 竿" % junk_n
     if empty_n: tail += "　🌀 空竿 %d" % empty_n
     return "🎣 连钓 %d 竿 · 停因：%s\n%s—— 收获 ——\n%s" % (done, stop_reason, body, tail)
+
+# ── 潜水远征：带氧气下水，途中触发「大遗迹」会暂停做抉择(choose)，氧气耗尽/surface 上岸出结算 ──
+def _exp_render_branch(bid):
+    enc = _DIVE_ENC_BY_ID[bid]; ox = S.get("oxygen", 0)
+    lines = ["%s ✨【%s】%s" % (enc.get("emoji", "🌊"), enc["name"], enc["intro"]),
+             "〔抉择〕剩余氧气 %d 瓶 —— 用 choose <编号> 选：" % ox]
+    for i, o in enumerate(enc["options"], 1):
+        c = o.get("oxygen", 0); cost = "耗 %d 氧" % c if c > 0 else "免费"
+        lines.append("  %d. %s（%s）%s" % (i, o["label"], cost, "" if c <= ox else "　🔒 氧气不足"))
+    return "\n".join(lines)
+def _exp_run(rng):
+    exp = S["expedition"]; stop = set(exp.get("stop", [])); seg = []; reason = None
+    while exp["left"] > 0 and S.get("oxygen", 0) > 0:
+        exp["left"] -= 1
+        r = _cast_step(rng, None, "dive")
+        if not r["consumed"]: break
+        exp["done"] += 1
+        rank = _RARITY_RANK.get(r.get("rarity", ""), 0); bid = r.get("luck")
+        if r["kind"] == "fish":
+            exp["caught"][r["fish_name"]] = exp["caught"].get(r["fish_name"], 0) + 1; exp["cn"] += 1
+            if r["first"]: exp["nn"] += 1
+        elif r["kind"] == "junk": exp["jn"] += 1
+        elif r["kind"] == "empty": exp["en"] += 1
+        if bid in _DIVE_BRANCH_IDS:   # 大遗迹 → 暂停做抉择
+            exp["pending"] = bid; seg.append(r["text"])
+            S["rngState"] = rng.state; S["rngCalls"] = rng.calls
+            return ("\n———\n".join(seg) + "\n\n" if seg else "") + _exp_render_branch(bid)
+        if r.get("first") or rank >= 2 or r.get("luck") or r.get("fever_hit") or r.get("frag"):
+            seg.append(r["text"])
+        new_hit = "new" in stop and r.get("first"); rare_hit = "rare" in stop and rank >= 2
+        if new_hit or rare_hit:
+            reason = "钓到新种" if new_hit else "钓到稀有+"; break
+    S["rngState"] = rng.state; S["rngCalls"] = rng.calls
+    body = ("\n———\n".join(seg) + "\n\n") if seg else ""
+    return body + _exp_settle(reason)
+def _exp_settle(reason):
+    exp = S.pop("expedition")
+    catch_value = sum(c["value"] for c in S["catch_inventory"][exp["inv0"]:])
+    treasure_value = sum(ITEMS.get(k, {}).get("value", 0) * (S["items"].get(k, 0) - exp["items0"].get(k, 0)) for k in S.get("items", {}))
+    extra_in = treasure_value + (S["points"] - exp["pts0"])
+    oxy_spent = exp["oxy0"] - S.get("oxygen", 0); cost = oxy_spent * OXYGEN["cost"]; net = catch_value + extra_in - cost
+    haul = "、".join("%s×%d" % (n, c) for n, c in exp["caught"].items()) or "空潜"
+    if reason is None: reason = "氧气耗尽" if S.get("oxygen", 0) <= 0 else "潜满 %d 次" % exp["done"]
+    s = "—— 🤿 远征结算 ——"
+    s += "\n🐟 渔获 %d 条%s：%s（可卖约 %d 点）" % (exp["cn"], ("，新种 %d" % exp["nn"]) if exp["nn"] else "", haul, catch_value)
+    if extra_in: s += "\n🎁 宝物/事件/新发现：+%d 点" % extra_in
+    if exp["jn"] + exp["en"]: s += "\n🪨 空手 %d 次" % (exp["jn"] + exp["en"])
+    s += "\n⛽ 氧气花费：%d 瓶（约 -%d 点）\n💰 本趟净值：约 %+d 点（卖掉渔获/宝物后）" % (oxy_spent, cost, net)
+    return "🤿 远征归来 · 潜 %d 次 · %s\n%s" % (exp["done"], reason, s)
+def _dive_start(n, stop_on):
+    if S.get("expedition"): return "你正在水下远征中——先 choose <编号> 处理眼前的遗迹，或 surface 返航。"
+    loc_id = S["location_id"]
+    if not _dive_unlocked(loc_id):
+        loc = LOCATIONS[loc_id]; need = _dive_frags_needed(loc); have = S.get("map_fragments", {}).get(loc_id, 0)
+        return "🔒 【%s】的潜水点还没解锁——先在水面钓鱼集齐藏宝图碎片（已 %d/%d），拼出地图再来潜。" % (loc["name"], have, need)
+    if S.get("oxygen", 0) <= 0: return "没有氧气瓶——去 shop 买氧气瓶（buy oxygen）再潜。"
+    n = max(1, min(20, int(n)))
+    rng = _Rng(S["rngState"], S["rngCalls"])
+    S["expedition"] = {"left": n, "pending": None, "oxy0": S["oxygen"], "pts0": S["points"],
+                       "inv0": len(S["catch_inventory"]), "items0": dict(S.get("items", {})),
+                       "done": 0, "caught": {}, "cn": 0, "nn": 0, "jn": 0, "en": 0, "stop": list(stop_on or [])}
+    opts = LOCATIONS[loc_id].get("dive_ambience", {}).get(S["season_id"], [])
+    scene = ("🤿 " + opts[rng.rint(0, len(opts) - 1)] + "\n\n") if opts else ""
+    return scene + _exp_run(rng)   # _exp_run 自己回写 rng
+def _c_choose(n):
+    exp = S.get("expedition")
+    if not exp or not exp.get("pending"): return "现在没有要抉择的遗迹。（dive 开一趟远征；遇到大遗迹才用 choose）"
+    enc = _DIVE_ENC_BY_ID.get(exp["pending"])
+    if not enc: exp["pending"] = None; rng = _Rng(S["rngState"], S["rngCalls"]); out = "那处遗迹已消散。\n\n" + _exp_run(rng); return out
+    opts = enc["options"]
+    if not (1 <= n <= len(opts)): return "选 1~%d（choose <编号>）。" % len(opts)
+    o = opts[n - 1]; c = o.get("oxygen", 0)
+    if c > S.get("oxygen", 0): return "氧气不够：「%s」要 %d 瓶，你只剩 %d。换个选项，或选返航/绕开那项。" % (o["label"], c, S.get("oxygen", 0))
+    rng = _Rng(S["rngState"], S["rngCalls"])
+    if c: S["oxygen"] -= c
+    parts = _grant_rewards(rng, o["outcome"].get("reward"))
+    txt = "〔%s〕%s" % (o["label"], o["outcome"]["text"]) + (("\n🎁 获得 " + "、".join(parts)) if parts else "")
+    exp["pending"] = None
+    return txt + "\n\n" + _exp_run(rng)   # 继续远征
+def _c_surface():
+    if not S.get("expedition"): return "你不在水下。（dive 开一趟远征）"
+    S["expedition"]["pending"] = None
+    return "你拨水上浮，结束这趟远征。\n" + _exp_settle("主动返航")
 
 _HELP = """文字钓鱼游戏（你是玩家）。用点数买鱼饵→抛竿→按稀有度概率钓鱼→卖鱼换点数→集齐图鉴。
 指令（传给 cmd()，大小写不敏感）：
@@ -1720,8 +1947,10 @@ _HELP = """文字钓鱼游戏（你是玩家）。用点数买鱼饵→抛竿→
   cmd('cast [饵id] N')        一次连钓 N 竿（1~20），只回一个汇总，省来回
   cmd('cast N stop=rare')     连钓/连潜遇到 新种(new)/稀有(rare)/事件(event=漂流瓶·宝箱·宝物·水下奇遇) 就提前停；可逗号多选(stop=new,rare,event 遇到任一就停)
   cmd('buy oxygen [数量]')     买氧气瓶（潜水用，一瓶潜一次；买 5 瓶 8 折、10 瓶 7 折）
-  cmd('dive [次数] [stop=..]') 潜水：耗氧气瓶(不耗饵)，捕只在水下出没的鱼；带次数=连潜，stop 同 cast
-                              （潜水点要先解锁：在该地水面钓鱼会随机捞到藏宝图碎片，集齐自动拼成藏宝图、解锁这里的潜水）
+  cmd('dive [带几瓶氧气] [stop=..]') 开一趟潜水「远征」：带 N 瓶氧气当深度预算，捕只在水下出没的鱼；途中遇「大遗迹」会暂停让你抉择；氧气耗尽/surface 上岸出远征结算
+  cmd('choose <编号>')         在大遗迹处做抉择（每个选项消耗不同氧气，不够的选不了）；不带编号=重看选项
+  cmd('surface')              主动结束当前远征、上浮上岸
+                              （潜水点要先解锁：在该地水面钓鱼/开宝箱会得到藏宝图碎片，集齐自动拼成藏宝图、解锁这里的潜水）
   cmd('goto')                 不带参数 = 列出所有钓点（价格/本季待发现；买过氧气瓶还显示水下待发现）
   cmd('goto <地点id>')         前往该地点（未解锁则花点数解锁）
   cmd('inventory')            看渔篓 + 物品 + 待开宝箱
@@ -1749,8 +1978,16 @@ def _run_one(line):
     if not line: return _HELP
     parts = line.split()
     c = parts[0].lower(); a = parts[1:]
+    # 远征进行中（水下）：只允许 choose/surface + 只读指令，其余先按下
+    if S.get("expedition") and c not in ("choose", "ch", "surface", "up", "status", "s", "inventory", "inv", "i", "encyclopedia", "enc", "e", "look", "l", "help", "h"):
+        return "你还在水下远征中——先 choose <编号> 处理眼前的遗迹，或 surface 返航上岸。"
     try:
         if c in ("help", "h"): return _HELP
+        elif c in ("choose", "ch"):
+            if a and a[0].lstrip("+").isdigit(): return _c_choose(int(a[0]))
+            exp = S.get("expedition")
+            return _exp_render_branch(exp["pending"]) if (exp and exp.get("pending")) else "现在没有要抉择的遗迹。"
+        elif c in ("surface", "up"): return _c_surface()
         elif c in ("status", "s"): return _c_status()
         elif c == "shop": return _c_shop()
         elif c == "buy":
@@ -1762,10 +1999,10 @@ def _run_one(line):
             ct = next((int(t) for t in a if t.isdigit()), 1)
             cs = next((t[5:].split(",") for t in a if t.startswith("stop=")), None)
             return _cast_many(cb, ct, cs)
-        elif c == "dive":   # 潜水：耗氧气瓶、不耗饵，只出水下鱼。dive [次数] [stop=...]
-            dt = next((int(t) for t in a if t.isdigit()), 1)
+        elif c == "dive":   # 潜水远征：带 N 瓶氧气下水，遇大遗迹暂停做抉择。dive [带几瓶] [stop=...]
+            dt = next((int(t) for t in a if t.isdigit()), 10)
             ds = next((t[5:].split(",") for t in a if t.startswith("stop=")), None)
-            return _cast_many(None, dt, ds, "dive")
+            return _dive_start(dt, ds)
         elif c == "open": return _c_open(a[0] if a else "")
         elif c in ("goto", "go"): return _c_goto(a[0] if a else "")
         elif c in ("inventory", "inv", "i"): return _c_inv()
