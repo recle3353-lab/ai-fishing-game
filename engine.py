@@ -1684,8 +1684,12 @@ def _cast_many(bait_id, times, stop_on, mode="cast"):
             if r["first"]: new_n += 1
         elif r["kind"] == "junk": junk_n += 1
         elif r["kind"] == "empty": empty_n += 1
-        if ("new" in stop and r.get("first")) or ("rare" in stop and rank >= 2) or ("event" in stop and r["kind"] == "event"):
-            stop_reason = "钓到新种" if ("new" in stop and r.get("first")) else ("钓到稀有+" if ("rare" in stop and rank >= 2) else "遇到事件")
+        new_hit = "new" in stop and r.get("first")
+        rare_hit = "rare" in stop and rank >= 2
+        enc_hit = r.get("luck") in _DIVE_ENC_BY_ID                       # 水下奇遇（珊瑚宫/遗迹/海底宝库…）
+        event_hit = "event" in stop and (r["kind"] == "event" or enc_hit)   # 漂流瓶/宝箱/宝物 + 水下奇遇都算
+        if new_hit or rare_hit or event_hit:
+            stop_reason = "钓到新种" if new_hit else ("钓到稀有+" if rare_hit else ("遇到水下奇遇" if enc_hit else "遇到事件"))
             break
     S["rngState"] = rng.state; S["rngCalls"] = rng.calls
     haul = "、".join("%s×%d" % (n, c) for n, c in caught.items()) or ("空潜" if dive else "空军")
@@ -1703,7 +1707,7 @@ _HELP = """文字钓鱼游戏（你是玩家）。用点数买鱼饵→抛竿→
   cmd('buy <饵id> [数量]')     买饵，如 cmd('buy glow_bait 2')
   cmd('cast [饵id]')          抛竿一次（不填=用最便宜可用饵）；核心动作
   cmd('cast [饵id] N')        一次连钓 N 竿（1~20），只回一个汇总，省来回
-  cmd('cast N stop=rare')     连钓时遇到 新种(new)/稀有(rare)/事件(event) 就提前停（可逗号多选）
+  cmd('cast N stop=rare')     连钓/连潜遇到 新种(new)/稀有(rare)/事件(event=漂流瓶·宝箱·宝物·水下奇遇) 就提前停；可逗号多选(stop=new,rare,event 遇到任一就停)
   cmd('buy oxygen [数量]')     买氧气瓶（潜水用，一瓶潜一次；买 5 瓶 8 折、10 瓶 7 折）
   cmd('dive [次数] [stop=..]') 潜水：耗氧气瓶(不耗饵)，捕只在水下出没的鱼；带次数=连潜，stop 同 cast
                               （潜水点要先解锁：在该地水面钓鱼会随机捞到藏宝图碎片，集齐自动拼成藏宝图、解锁这里的潜水）

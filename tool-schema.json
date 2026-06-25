@@ -20,7 +20,7 @@
       "stop_on": {
         "type": "array",
         "items": { "type": "string", "enum": ["new", "rare", "event"] },
-        "description": "cast/dive 连做时的提前停止条件（可多选）：new=遇到没见过的新种就停、rare=稀有及以上就停、event=遇到漂流瓶/宝箱/宝物就停。资源用光总会停。"
+        "description": "cast/dive 连做时的提前停止条件（可多选，stop_on=[\"new\",\"rare\",\"event\"] 遇到任一就停）：new=遇到没见过的新种就停、rare=稀有及以上就停、event=遇到漂流瓶/宝箱/宝物或水下奇遇（珊瑚宫/遗迹/海底宝库等）就停。资源用光总会停。"
       },
       "qty": { "type": "number", "description": "buy 用：数量，默认 1" },
       "target": { "type": "string", "description": "sell 用：实例 id（如 c_007）/ all / species <鱼id> / item <物品id>" },
