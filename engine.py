@@ -1634,8 +1634,8 @@ def _format_catch(f, size, value, inst, first):
     u = f["size_unit"]; r = f["rarity"]; rl = RARITY[r]["label"]
     cf = ("\n🫧 " + f["capture_feel"]) if f.get("capture_feel") else ""   # 手感(水下鱼)，与图鉴描述并存
     flavor = f.get("description", "") + cf
-    if r in ("legendary", "mythic"):   # 完整演出，🎉 留给传说/神话这种大场面
-        top = "🎉 👑 ─── 传 说 ─── 👑" if r == "legendary" else "🎉 ✧ ──── ❖ 神 话 ❖ ──── ✧"
+    if r in ("legendary", "mythic"):   # 完整演出（👑/❖ 已够隆重，不再加 🎉；🎉 留给图鉴里程碑/全收集）
+        top = "👑 ─── 传 说 ─── 👑" if r == "legendary" else "✧ ────── ❖ 神 话 ❖ ────── ✧"
         nm = "（★首次收录 +%d点）" % RARITY[r]["discovery_bonus"] if first else ""
         body = "%s · %s%s · %d点%s\n%s%s" % (f["name"], size, u, value, nm, flavor, ("\n📜 " + f["rumor"]) if f.get("rumor") else "")
         return "%s\n%s\n%s" % (top, body, top) if r == "mythic" else "%s\n%s" % (top, body)
